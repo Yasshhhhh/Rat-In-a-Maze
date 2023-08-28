@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Maze() 
 {
+
   const currentTime = new Date().getTime().toString();
   const rng = seedrandom(currentTime);
 
@@ -42,6 +43,9 @@ function Maze()
 
   return (
     <div className={classes.root}>
+     <h1>
+             Reload Page to Change Maze Configuration
+            </h1>
       <Grid container spacing={1}>
         <Box p={8}>
           <Grid
