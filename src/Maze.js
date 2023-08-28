@@ -6,6 +6,7 @@ import rat from "./rat.png";
 import cheese from "./cheese.png";
 import { Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import seedrandom from 'seedrandom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,20 +14,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Maze() {
+function Maze() 
+{
+  const currentTime = new Date().getTime().toString();
+  const rng = seedrandom(currentTime);
+
   const classes = useStyles();
   let rows = 4;
   let columns = 4;
   let matrix = Array(rows)
     .fill()
-    .map(() => Array(columns).fill(0));
-  // matrix[2][0] = 1;
-  // matrix[2][1] = 1;
-  matrix[2][2] = 1;
-  // matrix[1][0] = 1;
-  matrix[1][1] = 1;
-  // matrix[1][2] = 1;
-  // matrix[2][3] = 1;
+    .map((_, rowIndex) =>
+      Array(columns).fill(0).map((_, columnIndex) => 
+      {
+        if (
+          (rowIndex === 0 && columnIndex === 0) ||
+          (rowIndex === 3 && columnIndex === 3)
+        ) {
+          return 0;
+        } else {
+          return Math.round(rng());
+        }
+      })
+    );  
 
   let paths = calculatePaths(matrix, 0, 0, rows, columns);
 
@@ -86,7 +96,8 @@ function Maze() {
   );
 }
 
-function calculatePaths(matrix, i, j, rows, columns) {
+function calculatePaths(matrix, i, j, rows, columns) 
+{
   let pathCount = 0;
   let paths = [];
 
@@ -108,7 +119,8 @@ function calculatePaths(matrix, i, j, rows, columns) {
     // console.log("i", i, "j", j);
     if (i < 0 || i >= rows || j < 0 || j >= columns) return;
     if (matrix[i][j] === 1 || visited[i][j] === 1) return;
-    if (i === rows - 1 && j === columns - 1) {
+    if (i === rows - 1 && j === columns - 1) 
+    {
       pathCount++;
       //   console.log("found a path");
       paths.push([...currentpath]);
@@ -140,7 +152,8 @@ function calculatePaths(matrix, i, j, rows, columns) {
   }
 }
 
-function loadCells(mat, rows, columns, gindex, path) {
+function loadCells(mat, rows, columns, gindex, path) 
+{
   //   console.log(path);
   let matrix = Array(rows)
     .fill()
