@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Cell(props) {
+function Cell(props) 
+{
   const classes = useStyles(props); // Pass the props to useStyles to access the color prop
 
   return (
